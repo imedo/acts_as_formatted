@@ -11,7 +11,6 @@ module ActsAsFormatted
       
       initialize_format_configuration
       set_format_configuration(options)
-      define_format_field_methods
       
       define_format_hooks
       extend_class_for_acts_as_formatted
@@ -68,20 +67,8 @@ module ActsAsFormatted
       end
     end
     
-    def define_format_field_methods_for(field_name, formatted_field_name)
-      define_method formatted_field_name do
-        if attributes[formatted_field_name.to_s]
-          attributes[formatted_field_name.to_s]
-        else
-          formatted = reformat(field_name)
-          send(:"#{formatted_field_name}=", formatted)
-          formatted
-        end
-      end
-    end
-    
     def define_format_hooks
-      self.after_save :update_formatted_content
+      self.before_save :update_formatted_content
     end
     
     def extend_class_for_acts_as_formatted
@@ -106,7 +93,7 @@ module ActsAsFormatted
       text = attributes[field_name.to_s]
       formatters_for(field_name).each do |formatter|
         text = formatter.format_text(text)
-      end
+      end unless text.nil?
       text
     end
     
@@ -114,6 +101,11 @@ module ActsAsFormatted
       self.class.format_configuration[:fields].each do |field_name, field_options|
         send(:"#{field_options[:formatted_field]}=", reformat(field_name))
       end
+    end
+    
+    def update_formatted_content!
+      update_formatted_content
+      save
     end
   end
   

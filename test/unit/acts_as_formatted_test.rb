@@ -17,15 +17,8 @@ class ActsAsFormattedTest < Test::Unit::TestCase
     assert_equal expected, Article.format_configuration[:fields]
   end
   
-  def test_should_redefine_field_accessors
-    Article.expects(:define_method).with(:formatted_text)
-    Article.expects(:define_method).with(:formatted_summary)
-    
-    Article.acts_as_formatted :fields => [ :text, :summary ]
-  end
-  
-  def test_should_install_after_save_hook
-    Article.expects(:after_save).with(:update_formatted_content)
+  def test_should_install_before_save_hook
+    Article.expects(:before_save).with(:update_formatted_content)
     
     Article.acts_as_formatted
   end

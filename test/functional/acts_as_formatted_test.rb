@@ -15,14 +15,6 @@ class ActsAsFormattedTest < Test::Unit::TestCase
     assert_equal article.text, article.formatted_text
   end
   
-  def test_should_automatically_set_formatted_field_on_first_access
-    Article.acts_as_formatted :formatters => :noop
-    article = Article.new(:text => 'Hello')
-    assert_nil article.attributes['formatted_text']
-    article.formatted_text
-    assert_not_nil article.attributes['formatted_text']
-  end
-  
   def test_should_not_automatically_update_formatted_field_on_subsequent_access
     Article.acts_as_formatted :formatters => :noop
     article = Article.new(:text => 'Hello', :formatted_text => 'Foo')
@@ -34,6 +26,7 @@ class ActsAsFormattedTest < Test::Unit::TestCase
   def test_should_actually_format_content
     Article.acts_as_formatted :formatters => [ :simple, :link ]
     article = Article.new(:text => 'Hello http://www.example.com')
+    article.update_formatted_content
     assert_equal "<p>Hello <a href=\"http://www.example.com\">http://www.example.com</a></p>", article.formatted_text
   end
   
