@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
-class ActsAsFormattedTest < Test::Unit::TestCase
+class ActsAsFormattedTest < ActiveSupport::TestCase
   def setup
     reset_active_record_class :Article
   end
   
-  def test_should_set_configuration
+  test "should set configuration" do
     ActsAsFormatted.default_options = {
       :fields => :text,
       :formatters => :simple
@@ -17,13 +17,13 @@ class ActsAsFormattedTest < Test::Unit::TestCase
     assert_equal expected, Article.format_configuration[:fields]
   end
   
-  def test_should_install_before_save_hook
+  test "should install before save hook" do
     Article.expects(:before_save).with(:update_formatted_content)
     
     Article.acts_as_formatted
   end
   
-  def test_should_include_and_extend_submodules
+  test "should include and extend submodules" do
     Article.expects(:extend).with(ActsAsFormatted::ClassMethods)
     Article.expects(:include).with(ActsAsFormatted::InstanceMethods)
     

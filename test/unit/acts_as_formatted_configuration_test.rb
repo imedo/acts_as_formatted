@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
-class ActsAsFormattedConfigurationTest < Test::Unit::TestCase
+class ActsAsFormattedConfigurationTest < ActiveSupport::TestCase
   def setup
     ActsAsFormatted.default_options = {
       :fields => :text,
@@ -8,7 +8,7 @@ class ActsAsFormattedConfigurationTest < Test::Unit::TestCase
     }
   end
   
-  def test_should_allow_different_configuration_forms
+  test "should allow different configuration forms" do
     expected = { :text => { :formatters => [ :simple ], :formatted_field => :formatted_text } }
 
     assert_equal expected, ActiveRecord::Base.send(:normalized_format_configuration, {                                                        })
@@ -20,7 +20,7 @@ class ActsAsFormattedConfigurationTest < Test::Unit::TestCase
     assert_equal expected, ActiveRecord::Base.send(:normalized_format_configuration, { :fields => { :text => { :formatters => [ :simple ] } } })
   end
   
-  def test_should_allow_to_configure_multiple_fields
+  test "should allow to configure multiple fields" do
     expected = {
       :text => { :formatted_field => :formatted_text, :formatters => [ :simple ] },
       :summary => { :formatted_field => :formatted_summary, :formatters => [ :simple ] }
@@ -29,7 +29,7 @@ class ActsAsFormattedConfigurationTest < Test::Unit::TestCase
     assert_equal expected, ActiveRecord::Base.send(:normalized_format_configuration, { :fields => [ :text, :summary ] })
   end
   
-  def test_should_allow_to_configure_multiple_fields_with_different_formatters
+  test "should allow to configure multiple fields with different formatters" do
     expected = {
       :text => { :formatted_field => :formatted_text, :formatters => [ :simple ] },
       :summary => { :formatted_field => :formatted_summary, :formatters => [ :simple, :complicated ] }
@@ -38,7 +38,7 @@ class ActsAsFormattedConfigurationTest < Test::Unit::TestCase
     assert_equal expected, ActiveRecord::Base.send(:normalized_format_configuration, { :fields => [ :text, { :summary => [ :simple, :complicated ] }] })
   end
   
-  def test_should_allow_to_override_formatters_for_all_fields
+  test "should allow to override formatters for all fields" do
     expected = {
       :text => { :formatted_field => :formatted_text, :formatters => [ :simple, :complicated ] },
       :summary => { :formatted_field => :formatted_summary, :formatters => [ :simple, :complicated ] }

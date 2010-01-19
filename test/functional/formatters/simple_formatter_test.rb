@@ -1,19 +1,19 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
-class SimpleFormatterTest < Test::Unit::TestCase
+class SimpleFormatterTest < ActiveSupport::TestCase
   def setup
     @formatter = SimpleFormatter.new(nil)
   end
   
-  def test_should_add_paragraph_to_text
+  test "should add paragraph to text" do
     assert_equal '<p>Text</p>', @formatter.format_text('Text')
   end
   
-  def test_should_add_break_tags
+  test "should add break tags" do
     assert_equal "<p>More\n<br />Text</p>", @formatter.format_text("More\nText")
   end
   
-  def test_should_break_paragraph_on_subsequent_line_breaks
+  test "should break paragraph on subsequent line breaks" do
     assert_equal "<p>More</p>\n\n<p>Text</p>", @formatter.format_text("More\n\nText")
   end
 end
