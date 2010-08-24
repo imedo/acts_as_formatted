@@ -61,12 +61,6 @@ module ActsAsFormatted
       end
     end
     
-    def define_format_field_methods
-      self.format_configuration[:fields].each do |key, value|
-        define_format_field_methods_for(key, value[:formatted_field])
-      end
-    end
-    
     def define_format_hooks
       self.before_save :update_formatted_content
     end
@@ -78,6 +72,23 @@ module ActsAsFormatted
   end
 
   module ClassMethods
+    def update_all_formatted_content!(timestamps = false)
+      timestamps ? update_all_formatted_content_with_timestamps! : update_all_formatted_content_without_timestamps!
+    end
+    
+  private
+  
+    def update_all_formatted_content_with_timestamps!
+      all.each do |instance|
+        instance.update_formatted_content!
+      end
+    end
+    
+    def update_all_formatted_content_without_timestamps!
+      without_timestamps do
+        update_all_formatted_content_with_timestamps!
+      end
+    end
   end
   
   module InstanceMethods

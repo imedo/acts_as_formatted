@@ -1,4 +1,5 @@
 # Include hook code here
+require 'timestamps'
 require 'acts_as_formatted'
 require 'hash'
 
