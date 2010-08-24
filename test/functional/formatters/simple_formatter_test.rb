@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 class SimpleFormatterTest < ActiveSupport::TestCase
   def setup
-    @formatter = SimpleFormatter.new(nil)
+    @formatter = SimpleFormatter.new
   end
   
   test "should add paragraph to text" do

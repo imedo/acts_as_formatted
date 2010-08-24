@@ -1,4 +1,4 @@
-class SimpleFormatter < BaseFormatter
+class SimpleFormatter
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   

@@ -1,4 +1,4 @@
-class NoopFormatter < BaseFormatter
+class NoopFormatter
   def format_text(text)
     text
   end

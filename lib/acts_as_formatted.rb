@@ -85,7 +85,7 @@ module ActsAsFormatted
       @formatters ||= {}
       @formatters[field_name] ||= begin
         formatters = self.class.format_configuration[:fields][field_name][:formatters]
-        formatters.collect { |formatter| "#{formatter}_formatter".camelize.constantize.new(self) }
+        formatters.collect { |formatter| "#{formatter}_formatter".camelize.constantize.new }
       end
     end
     

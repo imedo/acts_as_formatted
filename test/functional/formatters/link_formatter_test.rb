@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 class LinkFormatterTest < ActiveSupport::TestCase
   def setup
-    @formatter = LinkFormatter.new(nil)
+    @formatter = LinkFormatter.new
   end
   
   test "should link http urls" do

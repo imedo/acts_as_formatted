@@ -1,4 +1,4 @@
-class LinkFormatter < BaseFormatter
+class LinkFormatter
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper

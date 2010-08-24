@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 class RepairHtmlFormatterTest < ActiveSupport::TestCase
   def setup
-    @formatter = RepairHtmlFormatter.new(nil)
+    @formatter = RepairHtmlFormatter.new
   end
   
   test "should not touch wellformed html" do

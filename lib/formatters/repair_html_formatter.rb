@@ -1,6 +1,6 @@
 require 'hpricot'
 
-class RepairHtmlFormatter < BaseFormatter
+class RepairHtmlFormatter
   def format_text(text)
     Hpricot(text).inner_html
   end
